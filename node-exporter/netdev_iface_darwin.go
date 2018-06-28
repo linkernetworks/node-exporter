@@ -15,9 +15,9 @@ import (
 */
 import "C"
 
-func getDefaultDev() (map[string]int, error) {
+func getNetDevInfo() (map[string]map[string]string, error) {
 	iface := ""
-	netDev := map[string]int{}
+	netDev, err := getNetDev()
 
 	var ifap, ifa *C.struct_ifaddrs
 	if C.getifaddrs(&ifap) == -1 {
@@ -28,7 +28,7 @@ func getDefaultDev() (map[string]int, error) {
 	for ifa = ifap; ifa != nil; ifa = ifa.ifa_next {
 		if ifa.ifa_addr.sa_family == C.AF_LINK {
 			dev := C.GoString(ifa.ifa_name)
-			netDev[dev] = 0
+			netDev[dev]["default"] = "false"
 		}
 	}
 
@@ -42,7 +42,7 @@ func getDefaultDev() (map[string]int, error) {
 		return nil, fmt.Errorf("Parse the interface fail")
 	}
 
-	netDev[iface] = 1
+	netDev[iface]["default"] = "true"
 
 	return netDev, nil
 }

@@ -28,13 +28,13 @@ func TestGetDefaultDev(t *testing.T) {
 		t.Skip("Skip the test when os is drawin.")
 	}
 
-	netDevDefault, err := getDefaultDev()
+	netDevDefault, err := getNetDevInfo()
 	if err != nil {
 		t.Error("couldn't get default network devices", err)
 	}
 
-	for key, value := range netDevDefault {
-		if value == 1 {
+	for key, info := range netDevDefault {
+		if info["default"] == "true" {
 			iface = key
 		}
 	}
