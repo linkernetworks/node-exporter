@@ -50,6 +50,10 @@ func getNetDevInfo() (map[string]map[string]string, error) {
 			info["type"] = "virtual"
 		} else {
 			info["type"] = "physical"
+
+			// extract pci id
+			folderPath := strings.Split(devLink, "/")
+			info["pci_id"] = folderPath[4]
 		}
 	}
 
