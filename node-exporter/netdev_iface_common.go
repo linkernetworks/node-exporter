@@ -38,13 +38,13 @@ func (c *netIfaceCollector) Update(ch chan<- prometheus.Metric) error {
 			desc = prometheus.NewDesc(
 				prometheus.BuildFQName(namespace, c.subsystem, "interface"),
 				fmt.Sprintf("List network devices and label the default one."),
-				[]string{"device", "default", "ip_address", "type", "pci_id"},
+				[]string{"device", "default", "dpdk", "ip_address", "type", "pci_id"},
 				nil,
 			)
 			c.metricDescs[key] = desc
 		}
 
-		ch <- prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64(1), key, info["default"], info["addr"], info["type"], info["pci_id"])
+		ch <- prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64(1), key, info["default"], info["dpdk"], info["addr"], info["type"], info["pci_id"])
 	}
 	return nil
 }
