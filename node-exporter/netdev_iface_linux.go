@@ -93,7 +93,7 @@ func getNetDevInfo() (map[string]map[string]string, error) {
 				netDev[dpdkName]["dpdk"] = "true"
 				netDev[dpdkName]["default"] = "false"
 				netDev[dpdkName]["pci_id"] = pciID
-				netDev[dpdkName]["type"] = "virtual"
+				netDev[dpdkName]["type"] = "physical"
 			}
 		}
 	}
